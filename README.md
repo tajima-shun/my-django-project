@@ -20,3 +20,7 @@ To reproduce this environment on your machine, ensure you have `uv` installed, t
 ```bash
 # Sync and install all required dependencies listed in pyproject.toml
 uv sync
+```
+
+### OpenSpec documentation
+This project uses OpenSpec for authoritative runtime and domain documentation. See `openspec/specs/` for the canonical project specification and agent guidance.
