@@ -16,8 +16,9 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path('admin/', admin.site.backends if hasattr(admin, 'site') else admin.site.urls), # 標準の管理者URL
+    path('', include('apps.bookings.urls')), # bookingsアプリのURLをルートに接続
 ]
