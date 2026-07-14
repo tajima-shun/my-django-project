@@ -1,0 +1,25 @@
+<div class="card shadow p-4 bg-white rounded border-top border-4 border-primary">
+    <h2 class="h5 mb-3 text-secondary">「{{ city }}」の現在利用可能なホテル</h2>
+    
+    <div class="list-group mb-4">
+        <div class="list-group-item p-3">
+            <h5 class="mb-1 fw-bold">Great Hotel {{ city }} Station</h5>
+            <small class="text-muted">最寄り駅から徒歩すぐ</small>
+        </div>
+        <div class="list-group-item p-3">
+            <h5 class="mb-1 fw-bold">{{ city }} Park Hotel</h5>
+            <small class="text-muted">周辺観光に便利なロケーション</small>
+        </div>
+    </div>
+
+    <!-- 簡単な予約フォームもその場に表示 -->
+    <form action="/booking/confirm/" method="POST" class="p-2 bg-light rounded">
+        <input type="hidden" name="city" value="{{ city }}">
+        <input type="hidden" name="room_type" value="Standard">
+        <div class="mb-3">
+            <label class="form-label fw-semibold">この都市のホテルを即時予約</label>
+            <input type="text" class="form-control" name="guest_name" placeholder="お名前を入力" required>
+        </div>
+        <button class="btn btn-success w-100" type="submit">予約を確定する</button>
+    </form>
+</div>

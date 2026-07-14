@@ -39,3 +39,10 @@ def booking_confirm_view(request):
         'room_type': room_type
     }
     return render(request, 'bookings/booking_confirm.html', context)
+
+def hotel_search_ajax_view(request):
+    """4. HTMX用: ページをリロードせずにホテルリストのパーツ(HTML)だけを返す"""
+    city = request.GET.get('city', 'Aizu').strip()
+    context = {'city': city}
+    # ページ全体ではなく、部分的なテンプレート(partial)を返します
+    return render(request, 'bookings/hotel_list_partial.html', context)

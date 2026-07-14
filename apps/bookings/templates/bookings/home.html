@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Great Hotels - Home</title>
-    <!-- Bootstrap CSS (レスポンシブ & デザイン分離) -->
+    <title>Great Hotels - HTMX Search</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- ⚡ HTMXの読み込み (これだけで非同期通信が可能になります) -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body class="bg-light">
     <nav class="navbar navbar-dark bg-dark shadow-sm">
@@ -14,27 +15,34 @@
         </div>
     </nav>
 
-    <main class="container my-5 text-center" style="max-width: 500px;">
-        <div class="card shadow p-4 bg-white rounded">
-            <h1 class="h3 mb-4 fw-normal">最適なホテルを見つけよう</h1>
-            <form action="/search/" method="GET" novalidate>
-                <div class="mb-3 text-start">
-                    <label for="citySelect" class="form-label fw-semibold">都市を選択</label>
-                    <select class="form-select form-select-lg" id="citySelect" name="city" aria-label="City Selection">
+    <main class="container my-5" style="max-width: 600px;">
+        <div class="card shadow p-4 bg-white rounded mb-4">
+            <h1 class="h3 mb-4 fw-normal text-center">リアルタイムホテル検索 (HTMX)</h1>
+            
+            <form novalidate>
+                <div class="mb-4">
+                    <label for="citySelect" class="form-label fw-semibold">都市を選択（選ぶと下のリストが即座に変わります）</label>
+                    <!-- 
+                      hx-get: 選択が変わったらこのURLにリクエストを送る
+                      hx-trigger: "change" (選択が変更されたら起動)
+                      hx-target: サーバーから返ってきたHTMLを "#hotel-results" に流し込む
+                    -->
+                    <select class="form-select form-select-lg" id="citySelect" name="city" 
+                            hx-get="/search-ajax/" 
+                            hx-trigger="change, load" 
+                            hx-target="#hotel-results"
+                            aria-label="City Selection">
                         <option value="Aizu" selected>会津 (Aizu)</option>
                         <option value="Tokyo">東京 (Tokyo)</option>
                         <option value="Kyoto">京都 (Kyoto)</option>
                     </select>
                 </div>
-                <div class="mb-4 text-start">
-                    <label for="roomSelect" class="form-label fw-semibold">部屋タイプ</label>
-                    <select class="form-select form-select-lg" id="roomSelect" name="room_type" aria-label="Room Type Selection">
-                        <option value="Standard" selected>スタンダード (Standard)</option>
-                        <option value="Deluxe">デラックス (Deluxe)</option>
-                    </select>
-                </div>
-                <button class="w-100 btn btn-lg btn-primary shadow-sm" type="submit">ホテルを検索</button>
             </form>
+        </div>
+
+        <!-- ⚡ HTMXによってこの中身(部分HTML)だけが動的に書き換わります！ -->
+        <div id="hotel-results">
+            <!-- ここにサーバーから取得したホテルリストが挿入されます -->
         </div>
     </main>
 
